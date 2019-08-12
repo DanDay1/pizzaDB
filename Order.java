@@ -2,6 +2,8 @@
     import java.awt.event.*;
     import javax.swing.*;
     import java.io.*;
+    import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes in java.sql package
+ 
     
     public class Order
     {
@@ -249,11 +251,11 @@
         public void actionPerformed(ActionEvent e)
         {
             JOptionPane.showMessageDialog(frame, 
-                    "PizzaDB\n\nVersion 1.0\nBuild B20080226-1746\n\n" +
+                    "GUI Pizza\n\nVersion 1.0\nBuild B20080226-1746\n\n" +
                         "(c) Copyright Daniel Day 2019\nAll rights reserved\n\n" +
                         "Visit /\nEducation To Go\n" +
                         "Intermediate Java Course", 
-                    "About PizzaDB", 
+                    "About GUI Pizza", 
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -296,8 +298,38 @@
         {
             String order = "Pizza Order\n" +
             "===========\n" +
-               "Toppings:\n";
+               "Crust:\n";               
+               if (regularCrustButton.isSelected())
+               order += "     Regular\n";
+               else if (thinCrustButton.isSelected())
+               order += "     Thin\n";
+               else if (deepCrustButton.isSelected())
+               order += "     Deep-Dish\n";
+               else if (handCrustButton.isSelected())
+               order += "     Hand-Tossed\n";
+               else
+               JOptionPane.showMessageDialog(frame, 
+               "You must select a crust type!",
+               "Crust Type Error", 
+               JOptionPane.ERROR_MESSAGE);
                
+               order += "Toppings:\n";
+               if (pepperoniBox.isSelected())
+               order += "     Pepperoni\n";
+               if (sausageBox.isSelected())
+               order += "     Sausage\n";
+               if (cheeseBox.isSelected())
+               order += "     Extra Cheese\n";
+               if (pepperBox.isSelected())
+               order += "     Peppers\n";
+               if (onionBox.isSelected())
+               order += "     Onions\n";
+               if (mushroomBox.isSelected())
+               order += "     Mushrooms\n";
+               if (oliveBox.isSelected())
+               order += "     Olives\n";
+               if (anchovyBox.isSelected())
+               order += "     Anchovies\n";
                
                int bs = 0;
                int bw = 0;
@@ -325,15 +357,19 @@
                    order += "     " + bw + " Buffalo Wings\n";
                }
                
-               if (nameText.getText().isEmpty())
+               if (nameText.getText().isEmpty() ||
+               addressText.getText().isEmpty() ||
+               cityText.getText().isEmpty())
                JOptionPane.showMessageDialog(frame, 
-               "Name field may not be empty.",
-               "Name Error", 
+               "Address fields may not be empty.",
+               "Address Error", 
                JOptionPane.ERROR_MESSAGE);
                else
                {
                    order += "Deliver To:\n";
-                   order += "     " + nameText.getText(); 
+                   order += "     " + nameText.getText() + "\n";
+                   order += "     " + addressText.getText() + "\n";
+                   order += "     " + cityText.getText() + "\n";
                }
                order += "\n***END OF ORDER ***\n";    
                try
@@ -341,6 +377,39 @@
                    PrintStream oFile = new PrintStream("PizzaOrder.txt");
                     oFile.print(order);
                     oFile.close();
+                    
+                   try (
+         // Step 1: Allocate a database 'Connection' object
+         Connection conn = DriverManager.getConnection(
+               "jdbc:mysql://localhost:3306/pizza_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
+               "root", "password");   // For MySQL only
+               // The format is: "jdbc:mysql://hostname:port/databaseName", "username", "password"
+ 
+         // Step 2: Allocate a 'Statement' object in the Connection
+         Statement stmt = conn.createStatement();
+      ) {
+         // Step 3: Execute a SQL SELECT query. The query result is returned in a 'ResultSet' object.
+         String strSelect = "select name, bstick, from pizza";
+         System.out.println("The SQL statement is: " + strSelect + "\n"); // Echo For debugging
+ 
+         ResultSet rset = stmt.executeQuery(strSelect);
+ 
+         // Step 4: Process the ResultSet by scrolling the cursor forward via next().
+         //  For each row, retrieve the contents of the cells with getXxx(columnName).
+         System.out.println("The records selected are:");
+         int rowCount = 0;
+         while(rset.next()) {   // Move the cursor to the next row, return false if no more row
+            String name = rset.getString("name");
+            double bstick = rset.getDouble("bstick");
+            System.out.println(name + ", " + bstick);
+            ++rowCount;
+         }
+         System.out.println("Total number of records = " + rowCount);
+ 
+      } catch(SQLException ex) {
+         ex.printStackTrace();
+      }  // Step 5: Close conn and stmt - Done automatically by try-with-resources (JDK 7) 
+                    
                 }
                     catch(IOException ioe)
                     {

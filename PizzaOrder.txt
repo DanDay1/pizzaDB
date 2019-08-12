@@ -1,8 +1,15 @@
 Pizza Order
 ===========
+Crust:
+     Deep-Dish
 Toppings:
+     Pepperoni
 Sides:
      1 Bread Sticks
+     2 Buffalo Wings
 Deliver To:
-     Me
+     one
+     two
+     three
+
 ***END OF ORDER ***
