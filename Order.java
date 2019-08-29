@@ -410,7 +410,8 @@
         
         
          // Step 3: Execute a SQL SELECT query. The query result is returned in a 'ResultSet' object.
-         String strSelect = "select name, bstick, from pizza_db";
+         //String strSelect = "select name, bstick, from pizza_db";
+         String strSelect = "select * from pizza_db.pizza";
          System.out.println("the SQL statement is: " + strSelect + "\n"); // Echo For debugging
  
          ResultSet rset = stmt.executeQuery(strSelect);
