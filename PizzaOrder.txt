@@ -1,15 +1,16 @@
 Pizza Order
 ===========
 Crust:
-     Deep-Dish
+     Thin
 Toppings:
      Pepperoni
+     Sausage
 Sides:
      1 Bread Sticks
-     2 Buffalo Wings
+     3 Buffalo Wings
 Deliver To:
-     one
-     two
-     three
+     r
+     d
+     d
 
 ***END OF ORDER ***

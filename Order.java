@@ -41,10 +41,12 @@
         Order gui = new Order();
         System.setProperty("apple.laf.useScreenMenuBar", "true");
         gui.start();
-    }    
+
+    }
+        
     public void start() 
     {
-        frame = new JFrame("GUI Pizza");
+        frame = new JFrame("PizzaDB");
 
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -251,11 +253,11 @@
         public void actionPerformed(ActionEvent e)
         {
             JOptionPane.showMessageDialog(frame, 
-                    "GUI Pizza\n\nVersion 1.0\nBuild B20080226-1746\n\n" +
+                    "PizzaDB\n\nVersion 1.0\nBuild B20080226-1746\n\n" +
                         "(c) Copyright Daniel Day 2019\nAll rights reserved\n\n" +
                         "Visit /\nEducation To Go\n" +
                         "Intermediate Java Course", 
-                    "About GUI Pizza", 
+                    "About PizzaDB", 
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -312,7 +314,7 @@
                "You must select a crust type!",
                "Crust Type Error", 
                JOptionPane.ERROR_MESSAGE);
-               
+               System.out.println("branch 0");
                order += "Toppings:\n";
                if (pepperoniBox.isSelected())
                order += "     Pepperoni\n";
@@ -372,14 +374,31 @@
                    order += "     " + cityText.getText() + "\n";
                }
                order += "\n***END OF ORDER ***\n";    
-               try
-               {
-                   PrintStream oFile = new PrintStream("PizzaOrder.txt");
+               System.out.println("branch 1");
+               try{
+                    PrintStream oFile = new PrintStream("PizzaOrder.txt");
                     oFile.print(order);
                     oFile.close();
-                    
-                   try (
-         // Step 1: Allocate a database 'Connection' object
+                }
+                catch(IOException ioe)
+                    {
+                        System.out.println("\n*** I/O Error ***\n" + ioe);
+                    }
+               
+                   try 
+                   {// Step 1: Allocate a database 'Connection' object
+                       
+                       
+                               try{
+               Class.forName("com.mysql.jdbc.Driver");
+            } 
+            catch (Exception ex) 
+            {
+        
+            }
+                       
+                       
+                       System.out.println("in  the SQL statement" + "\n"); 
          Connection conn = DriverManager.getConnection(
                "jdbc:mysql://localhost:3306/pizza_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                "root", "password");   // For MySQL only
@@ -387,7 +406,9 @@
  
          // Step 2: Allocate a 'Statement' object in the Connection
          Statement stmt = conn.createStatement();
-      ) {
+      
+        
+        
          // Step 3: Execute a SQL SELECT query. The query result is returned in a 'ResultSet' object.
          String strSelect = "select name, bstick, from pizza";
          System.out.println("The SQL statement is: " + strSelect + "\n"); // Echo For debugging
@@ -406,15 +427,12 @@
          }
          System.out.println("Total number of records = " + rowCount);
  
-      } catch(SQLException ex) {
+      } 
+      catch(SQLException ex) {
          ex.printStackTrace();
       }  // Step 5: Close conn and stmt - Done automatically by try-with-resources (JDK 7) 
                     
-                }
-                    catch(IOException ioe)
-                    {
-                        System.out.println("\n*** I/O Error ***\n" + ioe);
-                    }
+
         }
         
     }    
