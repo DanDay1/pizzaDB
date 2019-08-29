@@ -8,7 +8,7 @@
     public class Order
     {
     // window frame
-        private JFrame frame; 
+            private JFrame frame; 
                      // radio buttons and button group
              private JRadioButton regularCrustButton;
              private JRadioButton thinCrustButton;
@@ -36,13 +36,13 @@
              private JPanel contentPane;
 
 
-        public static void main (String[]args) 
-    {
-        Order gui = new Order();
-        System.setProperty("apple.laf.useScreenMenuBar", "true");
-        gui.start();
+             public static void main (String[]args) 
+            {
+                Order gui = new Order();
+                System.setProperty("apple.laf.useScreenMenuBar", "true");
+                gui.start();
 
-    }
+            }
         
     public void start() 
     {
@@ -398,7 +398,7 @@
             }
                        
                        
-                       System.out.println("in  the SQL statement" + "\n"); 
+         System.out.println("in  the SQL statement" + "\n"); 
          Connection conn = DriverManager.getConnection(
                "jdbc:mysql://localhost:3306/pizza_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                "root", "password");   // For MySQL only
@@ -410,8 +410,8 @@
         
         
          // Step 3: Execute a SQL SELECT query. The query result is returned in a 'ResultSet' object.
-         String strSelect = "select name, bstick, from pizza";
-         System.out.println("The SQL statement is: " + strSelect + "\n"); // Echo For debugging
+         String strSelect = "select name, bstick, from pizza_db";
+         System.out.println("the SQL statement is: " + strSelect + "\n"); // Echo For debugging
  
          ResultSet rset = stmt.executeQuery(strSelect);
  
