@@ -407,7 +407,7 @@
          // Step 2: Allocate a 'Statement' object in the Connection
          Statement stmt = conn.createStatement();
          
-         // INSERT a record (making one change for github test)
+         // INSERT a record
          String sqlInsert = "insert into pizza (name,bstick) values ('Shemp', 19)";
          //INSERT INTO pizza(name,bstick) VALUES ('Shemp', 19);
          System.out.println("The SQL statement is: " + sqlInsert + "\n");  // Echo for debugging
