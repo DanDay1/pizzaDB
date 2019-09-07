@@ -184,7 +184,7 @@
         
         
     }
-         private void makeEastRegion()
+    private void makeEastRegion()
     {
         // set up side orders with quantities in EAST
         JPanel panel = new JPanel();
@@ -214,7 +214,7 @@
         
         contentPane.add(panel, BorderLayout.EAST);
     }
-     private void makeSouthRegion()
+    private void makeSouthRegion()
     {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
@@ -385,12 +385,12 @@
                         System.out.println("\n*** I/O Error ***\n" + ioe);
                     }
                
-                   try 
+               try 
                    {// Step 1: Allocate a database 'Connection' object
                        
                        
-                               try{
-               Class.forName("com.mysql.jdbc.Driver");
+            try{
+              Class.forName("com.mysql.jdbc.Driver");
             } 
             catch (Exception ex) 
             {
@@ -406,6 +406,14 @@
  
          // Step 2: Allocate a 'Statement' object in the Connection
          Statement stmt = conn.createStatement();
+         
+         // INSERT a record
+         String sqlInsert = "insert into pizza (name,bstick) values ('Shemp', 19)";
+         //INSERT INTO pizza(name,bstick) VALUES ('Shemp', 19);
+         System.out.println("The SQL statement is: " + sqlInsert + "\n");  // Echo for debugging
+         int countInserted = stmt.executeUpdate(sqlInsert);
+         System.out.println(countInserted + " records inserted.\n");
+
       
         
         

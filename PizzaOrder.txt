@@ -1,16 +1,15 @@
 Pizza Order
 ===========
 Crust:
-     Deep-Dish
+     Regular
 Toppings:
-     Sausage
-     Mushrooms
+     Pepperoni
 Sides:
-     9 Bread Sticks
-     8 Buffalo Wings
+     2 Bread Sticks
+     3 Buffalo Wings
 Deliver To:
-     re
-     th
-     er
+     try
+     this
+     again
 
 ***END OF ORDER ***
