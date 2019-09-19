@@ -1,15 +1,15 @@
 Pizza Order
 ===========
 Crust:
-     Regular
+     Thin
 Toppings:
      Pepperoni
 Sides:
-     2 Bread Sticks
-     3 Buffalo Wings
+     3 Bread Sticks
+     4 Buffalo Wings
 Deliver To:
-     try
-     this
-     again
+     Mike
+     Was
+     Here
 
 ***END OF ORDER ***
