@@ -1,15 +1,11 @@
 Pizza Order
 ===========
 Crust:
-     Thin
+     Regular
 Toppings:
-     Pepperoni
-Sides:
-     3 Bread Sticks
-     4 Buffalo Wings
 Deliver To:
-     Mike
-     Was
-     Here
+     El BJ
+     Johnson
+     Mars
 
 ***END OF ORDER ***

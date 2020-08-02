@@ -3,6 +3,7 @@
     import javax.swing.*;
     import java.io.*;
     import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes in java.sql package
+    
  
     
     public class Order
@@ -27,7 +28,7 @@
              private JCheckBox anchovyBox;
 
              // text fields
-             private JTextField breadSticksText;
+             JTextField breadSticksText;
              private JTextField buffaloWingsText;
              JTextField nameText;
              private JTextField addressText;
@@ -414,7 +415,9 @@
          loadNameText = nameText.getText();
          System.out.println("load text " + loadNameText);
          int loadBS;
-         loadBS = 2;
+         loadBS = Integer.parseInt(breadSticksText.getText());
+         System.out.println("load int " + loadBS);
+         
          
          
          //String sqlInsert = "insert into pizza (name,bstick) values ('Joe', 1)";
