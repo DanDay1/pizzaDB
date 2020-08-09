@@ -3,7 +3,6 @@
     import javax.swing.*;
     import java.io.*;
     import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes in java.sql package
-    
  
     
     public class Order
@@ -173,9 +172,9 @@
         pepperBox = new JCheckBox("Bell Peppers", false);
         panel.add(pepperBox);
         onionBox = new JCheckBox("Onion", false);
-        mushroomBox = new JCheckBox("Mushrooms", false);
-        panel.add(mushroomBox);
         panel.add(onionBox);
+        mushroomBox = new JCheckBox("Mushrooms", false);
+        panel.add(mushroomBox);        
         oliveBox = new JCheckBox("Olives", false);
         panel.add(oliveBox);
         anchovyBox = new JCheckBox("Anchovy", false);
@@ -255,7 +254,7 @@
         {
             JOptionPane.showMessageDialog(frame, 
                     "PizzaDB\n\nVersion 1.0\nBuild B20080226-1746\n\n" +
-                        "(c) Copyright Daniel Day 2019\nAll rights reserved\n\n" +
+                        "(c) Copyright Daniel Day 2020\nAll rights reserved\n\n" +
                         "Visit /\nEducation To Go\n" +
                         "Intermediate Java Course", 
                     "About PizzaDB", 
@@ -298,41 +297,66 @@
     private class SaveListener implements ActionListener
     {
         public void actionPerformed(ActionEvent ae)
-        {
-            String order = "Pizza Order\n" +
-            "===========\n" +
-               "Crust:\n";               
+        {            
+               String crustText = "";          
                if (regularCrustButton.isSelected())
-               order += "     Regular\n";
+               crustText += "Regular";
                else if (thinCrustButton.isSelected())
-               order += "     Thin\n";
+               crustText += "Thin";
                else if (deepCrustButton.isSelected())
-               order += "     Deep-Dish\n";
+               crustText += "Deep-Dish";
                else if (handCrustButton.isSelected())
-               order += "     Hand-Tossed\n";
+               crustText += "Hand-Tossed";
                else
                JOptionPane.showMessageDialog(frame, 
                "You must select a crust type!",
                "Crust Type Error", 
                JOptionPane.ERROR_MESSAGE);
-               System.out.println("branch 0");
-               order += "Toppings:\n";
+               
+               //crustText.getText();
+               
+               String toppingsText = "";
                if (pepperoniBox.isSelected())
-               order += "     Pepperoni\n";
+               toppingsText += "     Pepperoni\n";
                if (sausageBox.isSelected())
-               order += "     Sausage\n";
+               toppingsText += "     Sausage\n";
                if (cheeseBox.isSelected())
-               order += "     Extra Cheese\n";
+               toppingsText += "     Extra Cheese\n";
                if (pepperBox.isSelected())
-               order += "     Peppers\n";
+               toppingsText += "     Peppers\n";
                if (onionBox.isSelected())
-               order += "     Onions\n";
+               toppingsText += "     Onions\n";
                if (mushroomBox.isSelected())
-               order += "     Mushrooms\n";
+               toppingsText += "     Mushrooms\n";
                if (oliveBox.isSelected())
-               order += "     Olives\n";
+               toppingsText += "     Olives\n";
                if (anchovyBox.isSelected())
-               order += "     Anchovies\n";
+               toppingsText += "     Anchovies\n";
+               
+               String toppingsTextDB = "";
+               if (pepperoniBox.isSelected())
+               toppingsTextDB += "RON ";
+               if (sausageBox.isSelected())
+               toppingsTextDB += "SAU ";
+               if (cheeseBox.isSelected())
+               toppingsTextDB += "XCH ";
+               if (pepperBox.isSelected())
+               toppingsTextDB += "BEL ";
+               if (onionBox.isSelected())
+               toppingsTextDB += "ONS ";
+               if (mushroomBox.isSelected())
+               toppingsTextDB += "MUS ";
+               if (oliveBox.isSelected())
+               toppingsTextDB += "OLI ";
+               if (anchovyBox.isSelected())
+               toppingsTextDB += "ANC ";
+    
+               String order = "Pizza Order\n" +
+               "===========\n" + "Crust:\n" + 
+               "     " + crustText + "\n"; 
+               System.out.println("branch 0");
+               order += "Toppings:\n" + toppingsText + "\n";
+
                
                int bs = 0;
                int bw = 0;
@@ -411,19 +435,33 @@
          // INSERT a record
          int pizzaID;
          
+         String loadCrustText;
+         loadCrustText = crustText;
+         String loadToppingsText;
+         loadToppingsText = toppingsTextDB;
          String loadNameText;
          loadNameText = nameText.getText();
-         System.out.println("load text " + loadNameText);
+         String loadAddressText;
+         loadAddressText = addressText.getText();
+         System.out.println("load address " + loadAddressText);
+         String loadCityText;
+         loadCityText = cityText.getText();
          int loadBS;
          loadBS = Integer.parseInt(breadSticksText.getText());
          System.out.println("load int " + loadBS);
+         int loadBW;
+         loadBW = Integer.parseInt(buffaloWingsText.getText());
+         System.out.println("load int " + loadBW);
+         
+         
+         
          
          
          
          //String sqlInsert = "insert into pizza (name,bstick) values ('Joe', 1)";
          //INSERT INTO pizza(name,bstick) VALUES ('Shemp', 19);
          //String sql = "INSERT INTO pizza VALUES (?, ?)";
-         String sql = "INSERT into pizza (name, bstick) VALUES (?,?)";
+         String sql = "INSERT into pizza (name, address, city, crust, toppings, bstick, bwing) VALUES (?,?,?,?,?,?,?)";
          //PreparedStatement preparedStatement = 
          //conn.prepareStatement("INSERT into pizza (name, bstick) VALUES (?,?)", 
          //Statement.RETURN_GENERATED_KEYS);
@@ -431,7 +469,12 @@
          //preparedStatement.setInt(1,autoGeneratedID);
          PreparedStatement bob = conn.prepareStatement(sql);
          bob.setString(1, loadNameText);
-         bob.setInt(2, loadBS);
+         bob.setString(2, loadAddressText);
+         bob.setString(3, loadCityText);
+         bob.setString(4, loadCrustText);
+         bob.setString(5, loadToppingsText);
+         bob.setInt(6, loadBS);
+         bob.setInt(7, loadBW);
          bob.executeUpdate();
          //System.out.println("The SQL statement is: " + sqlInsert + "\n");  // Echo for debugging
          //int countInserted = stmt.executeUpdate(sqlInsert);
@@ -453,8 +496,14 @@
          int rowCount = 0;
          while(rset.next()) {   // Move the cursor to the next row, return false if no more row
             String name = rset.getString("name");
+            String address = rset.getString("address");
+            String city = rset.getString("city");
+            String crust = rset.getString("crust");
+            String toppings = rset.getString("toppings");
             double bstick = rset.getDouble("bstick");
             System.out.println(name + ", " + bstick);
+            double bwing = rset.getDouble("bwing");
+            System.out.println(name + ", " + bwing);
             ++rowCount;
          }
          System.out.println("Total number of records = " + rowCount);

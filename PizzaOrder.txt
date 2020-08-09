@@ -3,9 +3,15 @@ Pizza Order
 Crust:
      Regular
 Toppings:
+     Pepperoni
+     Sausage
+
+Sides:
+     1 Bread Sticks
+     2 Buffalo Wings
 Deliver To:
-     El BJ
-     Johnson
-     Mars
+     Fungo
+     Northeast Delta Dental Stadium
+     Manchester,NH
 
 ***END OF ORDER ***
